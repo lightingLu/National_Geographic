@@ -21,7 +21,8 @@ abstract class BaseActiviy<T:ViewDataBinding> : LifecycleActivity() {
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         val layoutId=layoutId
         super.onCreate(savedInstanceState, persistentState)
-        binding=DataBindingUtil.setContentView<T>(this,layoutId)
+        binding= DataBindingUtil.setContentView(this,layoutId)
+//        binding?.setVariable(layoutId,null)
 
         try {
             if (binding!=null){
