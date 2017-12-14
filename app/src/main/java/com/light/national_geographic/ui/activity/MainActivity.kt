@@ -1,15 +1,16 @@
 package com.light.national_geographic.ui.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.light.national_geographic.R
+import com.light.national_geographic.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActiviy<ActivityMainBinding>() {
+    override fun initView(savedInstanceState: Bundle?) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-//        DataBindingUtil.setContentView(this,R.layout.activity_main)
     }
+
+    override val layoutId: Int
+        get() = R.layout.activity_main
+
 
 }

@@ -4,7 +4,6 @@ import android.arch.lifecycle.LifecycleActivity
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.LayoutInflater
 import android.view.View
 
@@ -18,13 +17,11 @@ abstract class BaseActiviy<T:ViewDataBinding> : LifecycleActivity() {
     private var mainView:View?=null
     private var binding:ViewDataBinding?=null
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         val layoutId=layoutId
-        super.onCreate(savedInstanceState, persistentState)
-        binding= DataBindingUtil.setContentView(this,layoutId)
-//        binding?.setVariable(layoutId,null)
-
+        super.onCreate(savedInstanceState)
         try {
+            binding= DataBindingUtil.setContentView(this,layoutId)
             if (binding!=null){
                 mainView=binding!!.root
             }else{

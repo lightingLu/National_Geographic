@@ -8,7 +8,10 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     dataBinding {
-        enabled = true
+        enabled true
+    }
+    kapt {
+        generateStubs = true
     }
     defaultConfig {
         applicationId "com.light.national_geographic"
@@ -34,7 +37,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-//    kapt "com.android.databinding:compiler:3.0.0"
+    kapt "com.android.databinding:compiler:3.0.0"
     compile "android.arch.lifecycle:runtime:1.0.0-alpha9"
     compile "android.arch.lifecycle:extensions:1.0.0-alpha9"
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha9"
