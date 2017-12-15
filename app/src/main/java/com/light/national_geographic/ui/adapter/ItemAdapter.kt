@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.light.national_geographic.R
-import com.light.national_geographic.data.Album
+import com.light.national_geographic.data.model.Album
 import com.light.national_geographic.databinding.ItemImgBinding
 import com.light.national_geographic.databinding.ViewEmptyBinding
 import com.light.national_geographic.databinding.ViewRecyclerviewLoadingBinding

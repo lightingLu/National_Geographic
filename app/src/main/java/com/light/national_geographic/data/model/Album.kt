@@ -1,4 +1,4 @@
-package com.light.national_geographic.data
+package com.light.national_geographic.data.model
 
 /**
  * 创建日期：2017/12/14 on 22:46

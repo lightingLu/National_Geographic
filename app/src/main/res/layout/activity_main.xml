@@ -48,18 +48,26 @@
                     android:background="@color/rv_background">
                 </android.support.v7.widget.RecyclerView>
                 <FrameLayout
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="180dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/logo">
+                    android:id="@+id/view_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="180dp"
+                        android:src="@drawable/logo" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="260dp"
-                        android:text="@string/load_failture"
-                        android:textSize="@dimen/load_fail_text_zise"/>
+                        android:text="加载失败，点击重试"
+                        android:textSize="15sp" />
 
                 </FrameLayout>
             </FrameLayout>
