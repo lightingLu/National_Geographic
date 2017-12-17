@@ -15,23 +15,24 @@ import com.light.national_geographic.data.model.Album
 import com.light.national_geographic.data.model.Item
 import com.light.national_geographic.databinding.ActivityMainBinding
 import com.light.national_geographic.ui.adapter.ItemAdapter
+import com.light.national_geographic.ui.listener.LoadMoreRecyclerOnScrollListener
 import com.light.national_geographic.viewmodel.ItemViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActiviy<ActivityMainBinding>(), SwipeRefreshLayout.OnRefreshListener, ItemAdapter.OnItemClickListener {
     override fun onRefresh() {
-       swipe_refresh.isRefreshing=true
-        mItemViewModel?.getItem(1)?.observe(this,object :Observer<Resource<Item?>?>{
+        swipe_refresh.isRefreshing = true
+        mItemViewModel?.getItem(1)?.observe(this, object : Observer<Resource<Item?>?> {
             override fun onChanged(t: Resource<Item?>?) {
-                if (t!!.mStatus==SUCCESS){
-                    view_error.visibility=View.GONE
-                    swipe_refresh.isRefreshing=false
+                if (t!!.mStatus == SUCCESS) {
+                    view_error.visibility = View.GONE
+                    swipe_refresh.isRefreshing = false
                     adapter?.setData(t!!.mData!!.album)
                 }
-                if (t!!.mStatus==ERROR){
-                   swipe_refresh.isRefreshing=false
-                    if (adapter?.getRealCount()==0){
-                        view_error.visibility=View.VISIBLE
+                if (t!!.mStatus == ERROR) {
+                    swipe_refresh.isRefreshing = false
+                    if (adapter?.getRealCount() == 0) {
+                        view_error.visibility = View.VISIBLE
                         view_error.setOnClickListener(View.OnClickListener {
                             onRefresh()
                         })
@@ -44,8 +45,34 @@ class MainActivity : BaseActiviy<ActivityMainBinding>(), SwipeRefreshLayout.OnRe
 
     }
 
+    fun getMoreItem() {
+        swipe_refresh.isRefreshing = true
+        mItemViewModel?.getItem(1)?.observe(this, object : Observer<Resource<Item?>?> {
+            override fun onChanged(t: Resource<Item?>?) {
+                adapter?.setIsLoading()
+                if (t!!.mStatus == SUCCESS) {
+                    adapter?.addData(t!!.mData!!.album)
+                    swipe_refresh.isRefreshing = false
+                } else {
+                    adapter?.setNetError()
+                    adapter?.setOnReloadClickListener(object : ItemAdapter.OnReloadClickListener {
+                        override fun onClick() {
+                            Toast.makeText(this@MainActivity, "网络错误，请检查网络", Toast.LENGTH_LONG).show()
+                            getMoreItem()
+                        }
+
+                    })
+                }
+            }
+
+        })
+
+    }
+
     override fun onClick(adapter: ItemAdapter, position: Int, view: View, itemViewHolder: ItemAdapter.ItemViewHolder, data: MutableList<Album>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        val intent: Intent = Intent(this, InfoActivity::class.java)
+        startActivity(intent)
     }
 
     var clickTime: Long = 0
@@ -54,6 +81,7 @@ class MainActivity : BaseActiviy<ActivityMainBinding>(), SwipeRefreshLayout.OnRe
     var mItemViewModel: ItemViewModel? = null
     private val SUCCESS: Int = 1
     private val ERROR: Int = 2
+    private var mCurrentPage: Int = 1
 
     override fun initView(savedInstanceState: Bundle?) {
         progressDialog = ProgressDialog(this)
@@ -62,10 +90,19 @@ class MainActivity : BaseActiviy<ActivityMainBinding>(), SwipeRefreshLayout.OnRe
         recycler.adapter = adapter
         adapter?.setOnclickListener(this)
         val layoutManager: LinearLayoutManager = LinearLayoutManager(this)
-        recycler.layoutManager=layoutManager
-        mItemViewModel= ViewModelProviders.of(this).get(ItemViewModel::class.java)
+        recycler.layoutManager = layoutManager
+        mItemViewModel = ViewModelProviders.of(this).get(ItemViewModel::class.java)
 
         swipe_refresh.setOnRefreshListener(this)
+        onRefresh()
+        recycler.setOnScrollListener(object : LoadMoreRecyclerOnScrollListener(layoutManager) {
+
+            override fun onLoadMore(currentPage: Int) {
+                mCurrentPage = currentPage
+                getMoreItem()
+
+            }
+        })
 
         title_main.setOnClickListener(View.OnClickListener {
             if (System.currentTimeMillis() - clickTime >= 2000) {
