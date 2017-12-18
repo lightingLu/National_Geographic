@@ -1,12 +1,14 @@
 package com.light.national_geographic.data
 
+import java.io.Serializable
+
 /**
  * 创建日期：2017/12/15 on 9:01
  * @author ludaguang
  * @version 1.0
  * 类说明：
  */
-class Resource<T> {
+class Resource<T>() :Serializable{
 
     var mData: T? = null
     var mStatus: Int? = null
@@ -18,7 +20,6 @@ class Resource<T> {
         this.mMessage = mMessage
     }
 
-    constructor()
 
     companion object {
         private val SUCCESS: Int = 1

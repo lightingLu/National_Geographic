@@ -12,10 +12,12 @@ import android.widget.Toast
 import com.light.national_geographic.R
 import com.light.national_geographic.data.Resource
 import com.light.national_geographic.data.model.Album
+import com.light.national_geographic.data.model.Detail
 import com.light.national_geographic.data.model.Item
 import com.light.national_geographic.databinding.ActivityMainBinding
 import com.light.national_geographic.ui.adapter.ItemAdapter
 import com.light.national_geographic.ui.listener.LoadMoreRecyclerOnScrollListener
+import com.light.national_geographic.viewmodel.DetailViewModel
 import com.light.national_geographic.viewmodel.ItemViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -69,10 +71,26 @@ class MainActivity : BaseActiviy<ActivityMainBinding>(), SwipeRefreshLayout.OnRe
 
     }
 
+    var mDetailViewModel: DetailViewModel? = null
     override fun onClick(adapter: ItemAdapter, position: Int, view: View, itemViewHolder: ItemAdapter.ItemViewHolder, data: MutableList<Album>) {
+        progressDialog?.show()
+        mDetailViewModel=ViewModelProviders.of(this).get(DetailViewModel::class.java)
+        mDetailViewModel!!.getDetail(data.get(position).id!!)!!.observe(this,object :Observer<Resource<Detail?>?>{
+            override fun onChanged(t: Resource<Detail?>?) {
+                if (t!!.mStatus==SUCCESS){
+                    val intent: Intent = Intent(this@MainActivity, DetailActivity::class.java)
+                    intent.putExtra("DETAIL",t!!.mData!!)
+                    this@MainActivity.startActivity(intent)
+                    progressDialog?.dismiss()
+                }else{
+                    Toast.makeText(this@MainActivity, "加载失败，请检查网络重试", Toast.LENGTH_SHORT).show()
+                    progressDialog?.dismiss()
+                }
 
-        val intent: Intent = Intent(this, InfoActivity::class.java)
-        startActivity(intent)
+            }
+
+        })
+
     }
 
     var clickTime: Long = 0

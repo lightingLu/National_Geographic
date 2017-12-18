@@ -2,8 +2,10 @@ package com.light.national_geographic.data
 
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
+import com.light.national_geographic.data.model.Detail
 import com.light.national_geographic.data.model.Item
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,6 +32,25 @@ class WebRepository {
             override fun onFailure(call: Call<Item?>?, t: Throwable?) {
                 Log.d("National_Geographic", "onFailure")
                 data.value = Resource.error(t?.message)
+            }
+
+        })
+        return data
+    }
+
+
+    fun getDetail(id: String): MutableLiveData<Resource<Detail?>>? {
+        var data: MutableLiveData<Resource<Detail?>> = MutableLiveData<Resource<Detail?>>()
+        var retrofit = Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build()
+        mWebService = retrofit.create(WebService::class.java)
+        mWebService?.getDetail(id)?.enqueue(object : Callback<Detail?> {
+            override fun onFailure(call: Call<Detail?>?, t: Throwable?) {
+                data.value = Resource.error(t?.message)
+
+            }
+
+            override fun onResponse(call: Call<Detail?>?, response: Response<Detail?>?) {
+                data.value = Resource.success(response?.body())
             }
 
         })
