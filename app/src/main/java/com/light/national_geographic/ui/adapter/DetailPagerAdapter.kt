@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
+import com.github.chrisbanes.photoview.PhotoView
 import com.light.national_geographic.data.model.Detail
 
 /**
@@ -13,7 +14,7 @@ import com.light.national_geographic.data.model.Detail
  * @version 1.0
  * 类说明：
  */
-class DetailPagerAdapter():PagerAdapter {
+class DetailPagerAdapter(): PagerAdapter() {
     private var mData: Detail? = null
     private var mOnPageClickListener: OnPageClickListener? = null
 

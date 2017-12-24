@@ -18,4 +18,7 @@ class Detail :Serializable{
     var counttotal: String? = null
     var picture: MutableList<Picture>? = null
 
+
+
+
 }
