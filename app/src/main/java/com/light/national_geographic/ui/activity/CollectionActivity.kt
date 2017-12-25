@@ -6,7 +6,7 @@ import com.light.national_geographic.databinding.ActivityDetailBinding
 
 class CollectionActivity : BaseActiviy<ActivityDetailBinding>() {
     override val layoutId: Int
-        get() = R.layout.activity_detail
+        get() = R.layout.activity_collection
 
     override fun initView(savedInstanceState: Bundle?) {
     }

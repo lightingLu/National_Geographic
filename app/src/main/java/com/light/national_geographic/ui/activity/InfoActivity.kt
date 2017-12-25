@@ -1,13 +1,15 @@
 package com.light.national_geographic.ui.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.light.national_geographic.R
+import com.light.national_geographic.databinding.ActivityInfoBinding
 
-class InfoActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_info)
+class InfoActivity : BaseActiviy<ActivityInfoBinding>() {
+    override val layoutId: Int
+        get() = R.layout.activity_info
+    override fun initView(savedInstanceState: Bundle?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+
 }
