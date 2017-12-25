@@ -1,13 +1,15 @@
 package com.light.national_geographic.ui.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.light.national_geographic.R
+import com.light.national_geographic.databinding.ActivityDetailBinding
 
-class CollectionActivity : AppCompatActivity() {
+class CollectionActivity : BaseActiviy<ActivityDetailBinding>() {
+    override val layoutId: Int
+        get() = R.layout.activity_detail
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_collection)
+    override fun initView(savedInstanceState: Bundle?) {
     }
+
+
 }
