@@ -51,13 +51,13 @@ class DetailActivity : BaseActiviy<ActivityDetailBinding>() {
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onPageSelected(position: Int) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         })
+
+
 
     }
 
