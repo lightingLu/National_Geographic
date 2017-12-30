@@ -56,8 +56,7 @@ class DetailActivity : BaseActiviy<ActivityDetailBinding>() {
             override fun onPageSelected(position: Int) {
             }
         })
-
-
+        detailPagerAdapter.setonPageClickListener(listener:)
 
     }
 
