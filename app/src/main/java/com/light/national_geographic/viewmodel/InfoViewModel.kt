@@ -11,7 +11,7 @@ import com.light.national_geographic.utils.GlideCacheUtil
  * @version 1.0
  * 类说明：缓存
  */
-class InfoViewHolder:ViewModel() {
+class InfoViewModel :ViewModel() {
     var mImageCache : MutableLiveData<String> = MutableLiveData<String>()
     fun getImageCache(context: Context):MutableLiveData<String>{
         mImageCache.value = GlideCacheUtil().getInstance().getCacheSize(context)
