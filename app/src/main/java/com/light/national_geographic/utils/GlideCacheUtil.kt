@@ -15,10 +15,10 @@ import java.math.BigDecimal
  * @version 1.0
  * 类说明：
  */
-class GlideCacheUtil {
+open class GlideCacheUtil {
     private var inst: GlideCacheUtil? = null
 
-    fun getInstance(): GlideCacheUtil {
+    public fun getInstance(): GlideCacheUtil {
         if (inst == null) {
             inst = GlideCacheUtil()
         }

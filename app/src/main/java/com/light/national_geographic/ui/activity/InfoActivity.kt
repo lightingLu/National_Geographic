@@ -8,7 +8,6 @@ class InfoActivity : BaseActiviy<ActivityInfoBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_info
     override fun initView(savedInstanceState: Bundle?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 
