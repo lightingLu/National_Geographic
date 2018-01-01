@@ -15,7 +15,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.view.animation.DecelerateInterpolator
-import android.widget.Button
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestListener
@@ -42,7 +41,6 @@ class DetailActivity : BaseActiviy<ActivityDetailBinding>() {
         get() = R.layout.activity_detail
 
     override fun initView(savedInstanceState: Bundle?) {
-        val btn: Button;
         Collects.getCollect(this)
         val detailPagerAdapter = DetailPagerAdapter()
         val data: Detail = this.intent.extras.getSerializable("DETAIL") as Detail;
@@ -61,31 +59,32 @@ class DetailActivity : BaseActiviy<ActivityDetailBinding>() {
         view_pager.setCurrentItem(0)
 
         //收藏activity需要做的
-        val firstpos=this.intent.extras.getInt("POS")
-        if (firstpos!=0){
-            view_pager.currentItem=firstpos
-            getBinding().pos=firstpos+1
-            mCurrentPosition=firstpos
+        val firstpos = this.intent.extras.getInt("POS")
+        if (firstpos != 0) {
+            view_pager.currentItem = firstpos
+            getBinding().pos = firstpos + 1
+            mCurrentPosition = firstpos
         }
 
 
         view_pager.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
-                if (picturesList != null) {
-                    getBinding().data = picturesList!!.get(state)
-                    getBinding().pos = state + 1
-                    mCurrentPosition = state
-                    getBinding().isCollect = false
-                    if (Collects.isCollect(picturesList!!.get(state))) {
-                        getBinding().isCollect = true
-                    }
-                }
+
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
 
             override fun onPageSelected(position: Int) {
+                if (picturesList != null) {
+                    getBinding().data = picturesList!!.get(position)
+                    getBinding().pos = position + 1
+                    mCurrentPosition = position
+                    getBinding().isCollect = false
+                    if (Collects.isCollect(picturesList!!.get(position))) {
+                        getBinding().isCollect = true
+                    }
+                }
             }
         })
 
@@ -131,15 +130,15 @@ class DetailActivity : BaseActiviy<ActivityDetailBinding>() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
-           REQUEST_PERMISSIONS-> {
-               run {
-                   if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                       savePhoto()
-                   }
-               }
-               return
-           }
+        when (requestCode) {
+            REQUEST_PERMISSIONS -> {
+                run {
+                    if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        savePhoto()
+                    }
+                }
+                return
+            }
         }
     }
 
@@ -199,41 +198,41 @@ class DetailActivity : BaseActiviy<ActivityDetailBinding>() {
             }
 
             override fun onResourceReady(resource: Bitmap?, model: String?, target: Target<Bitmap?>?, isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
-                val fileDirePath: File = File(Environment.getExternalStorageDirectory().path+"/National_geographic/"+"/image/")
-                if (!fileDirePath.exists()){
+                val fileDirePath: File = File(Environment.getExternalStorageDirectory().path + "/National_geographic/" + "/image/")
+                if (!fileDirePath.exists()) {
                     fileDirePath.mkdirs()
                 }
-                val fileName=picturesList!!.get(mCurrentPosition).id+".jpeg"
-                val filePath=File(fileDirePath,fileName)
-                if (filePath.exists()){
+                val fileName = picturesList!!.get(mCurrentPosition).id + ".jpeg"
+                val filePath = File(fileDirePath, fileName)
+                if (filePath.exists()) {
                     handler.post({
                         Toast.makeText(this@DetailActivity, "此照片已保存过", Toast.LENGTH_SHORT).show()
                         getBinding().saveProgressVisible = false
                     })
-                }else{
+                } else {
                     try {
-                        var fileOutputStream:FileOutputStream= FileOutputStream(filePath)
-                        resource?.compress(Bitmap.CompressFormat.JPEG,100,fileOutputStream)
+                        var fileOutputStream: FileOutputStream = FileOutputStream(filePath)
+                        resource?.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
                         fileOutputStream.flush()
                         fileOutputStream.close()
                         handler.post({
                             Toast.makeText(this@DetailActivity, "保存成功", Toast.LENGTH_SHORT).show()
                             getBinding().saveProgressVisible = false
                         })
-                    }catch (e:IOException){
+                    } catch (e: IOException) {
                         handler.post({
                             Toast.makeText(this@DetailActivity, "保存失败,请检查网络及权限", Toast.LENGTH_SHORT).show()
                             getBinding().saveProgressVisible = false
                         })
                     }
-                   return true;
+                    return true;
                 }
 
 
                 return true
             }
 
-        }).into(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL)
+        }).into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
 
     }
 
