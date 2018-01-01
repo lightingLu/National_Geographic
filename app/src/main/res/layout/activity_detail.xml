@@ -28,7 +28,7 @@
             type="Boolean" />
 
         <variable
-            name="isConnect"
+            name="isCollect"
             type="Boolean" />
 
     </data>
