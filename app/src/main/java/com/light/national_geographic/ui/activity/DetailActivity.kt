@@ -68,6 +68,7 @@ class DetailActivity : BaseActiviy<ActivityDetailBinding>() {
 
 
         view_pager.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
             override fun onPageScrollStateChanged(state: Int) {
 
             }
