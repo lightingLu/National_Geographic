@@ -1,0 +1,13 @@
+ext {
+
+
+//    versions = [
+//            glide:"3.0.8"
+//
+//
+//    ]
+//    libraries = [
+//            glide: "com.github.bumptech.glide:glide:${versions.glide}",
+//
+//    ]
+}

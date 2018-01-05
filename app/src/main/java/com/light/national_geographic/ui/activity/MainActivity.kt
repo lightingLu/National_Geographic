@@ -47,9 +47,9 @@ class MainActivity : BaseActiviy<ActivityMainBinding>(), SwipeRefreshLayout.OnRe
 
     }
 
-    fun getMoreItem() {
+    fun getMoreItem(page:Int) {
         swipe_refresh.isRefreshing = true
-        mItemViewModel?.getItem(1)?.observe(this, object : Observer<Resource<Item?>?> {
+        mItemViewModel?.getItem(page)?.observe(this, object : Observer<Resource<Item?>?> {
             override fun onChanged(t: Resource<Item?>?) {
                 adapter?.setIsLoading()
                 if (t!!.mStatus == SUCCESS) {
@@ -60,7 +60,7 @@ class MainActivity : BaseActiviy<ActivityMainBinding>(), SwipeRefreshLayout.OnRe
                     adapter?.setOnReloadClickListener(object : ItemAdapter.OnReloadClickListener {
                         override fun onClick() {
                             Toast.makeText(this@MainActivity, "网络错误，请检查网络", Toast.LENGTH_LONG).show()
-                            getMoreItem()
+                            getMoreItem(page)
                         }
 
                     })
@@ -116,8 +116,8 @@ class MainActivity : BaseActiviy<ActivityMainBinding>(), SwipeRefreshLayout.OnRe
         recycler.setOnScrollListener(object : LoadMoreRecyclerOnScrollListener(layoutManager) {
 
             override fun onLoadMore(currentPage: Int) {
-                mCurrentPage = currentPage
-                getMoreItem()
+                mCurrentPage = currentPage+1
+                getMoreItem(mCurrentPage)
 
             }
         })
