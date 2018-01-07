@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
   <FrameLayout
       android:id="@+id/fl_splash"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_gravity="top"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+      <com.airbnb.lottie.LottieAnimationView
+          android:layout_gravity="center"
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:lottie_fileName="merrychristmas.json"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_gravity="bottom"
